@@ -1,0 +1,81 @@
+{
+  "description": "Approved Director specification and identity handoff; assets, configuration and source modules are authored in their assigned stages.",
+  "files": {
+    "design": "data/game-spec.json",
+    "identity": "manifest.json",
+    "documentation": "README.md",
+    "shell": "index.html",
+    "visuals": "data/game-spec.json",
+    "gameplayTuning": "data/game-spec.json",
+    "assets": "data/game-spec.json",
+    "uiCopy": "data/game-spec.json"
+  },
+  "sourceModules": {
+    "state": [
+      "scripts/core.js"
+    ],
+    "controls": [
+      "scripts/input.js"
+    ],
+    "audio": [
+      "scripts/audio.js"
+    ],
+    "rendering": [
+      "scripts/renderer.js"
+    ],
+    "gameplay": [
+      "scripts/gameplay.js"
+    ],
+    "testing": [
+      "scripts/test-hook.js"
+    ],
+    "startup": [
+      "scripts/game.js"
+    ],
+    "ui": [
+      "scripts/ui.js"
+    ]
+  },
+  "importantObjects": [
+    "gameplayContract",
+    "threeDContract",
+    "procedural3DArt",
+    "audioDirection",
+    "difficultyTuning",
+    "leaderboard"
+  ],
+  "importantFunctions": [],
+  "exposedGlobals": [
+    "LOBSTER_GAME_CONFIG",
+    "LOBSTER_GAME_ASSETS",
+    "SoonLabGame",
+    "__gameTest"
+  ],
+  "safeEdits": [
+    "Identity documentation may describe the approved scope without changing its mechanics.",
+    "Later source scaffolding must replace the empty source module routes with the actual authored layout."
+  ],
+  "riskyEdits": [
+    "Approved specification is frozen after spec-only preflight; design changes require the applicable approval workflow.",
+    "Do not change the five activities, difficulty names, 5% top-break chance, traditional board rules, one-item capacity or solo scope.",
+    "No gameplay runtime, generated media, configuration or final runtime proof is present at this Director handoff."
+  ],
+  "editableConfigKeys": [
+    "controls",
+    "difficulty",
+    "progression",
+    "accessibility",
+    "simulation",
+    "camera",
+    "player",
+    "world",
+    "activities",
+    "top",
+    "quan",
+    "con",
+    "push",
+    "sap",
+    "records",
+    "ui"
+  ]
+}

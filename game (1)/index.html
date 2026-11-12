@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- SoonLab Generate -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lễ Hội Trò Chơi Dân Gian Miền Quê Việt Nam</title>
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <main id="game-root" aria-label="Vietnamese folk festival">
+    <div id="scene"></div><div id="world-labels"></div>
+    <header id="brand"><div class="brand-symbol" aria-hidden="true"><span></span></div><div class="brand-text"><strong>Lễ Hội Dân Gian</strong><small id="village-subtitle">MIỀN QUÊ VIỆT NAM</small></div></header>
+    <div id="top-actions"><button data-action="records">Records</button><button data-action="leave" id="leave-activity" hidden>Leave activity</button><button data-audio-toggle aria-label="Toggle festival sound" aria-pressed="false">Sound on</button></div>
+    <button id="mobile-fullscreen" type="button" aria-label="Bật toàn màn hình" aria-pressed="false">⛶ Toàn màn hình</button>
+    <div id="fullscreen-notice" role="status" aria-live="polite" hidden></div>
+    <section id="hud" hidden aria-label="Festival passport"><div class="passport-head"><span>YOUR FESTIVAL PASSPORT</span><b id="stamp-count">0 / 7</b></div><div class="stamps"><span data-stamp="top">01</span><span data-stamp="quan">02</span><span data-stamp="con">03</span><span data-stamp="push">04</span><span data-stamp="sap">05</span><span data-stamp="stilts">06</span><span data-stamp="crossbow">07</span></div><div class="passport-footer"><span id="held-item">Hands empty</span><span id="difficulty-tag">Noob</span></div></section>
+    <aside id="compass" hidden><div class="map-title">THE VILLAGE · NORTH ↑</div><div class="map-grid"><span>01 · Đánh Cù</span><span>02 · Ô Ăn Quan</span><span>03 · Ném Còn</span><span>04 · Đẩy Gậy</span><span>05 · Nhảy Sạp</span><span>06 · Đi Cà Kheo</span><span>07 · Bắn Nỏ</span><span class="entrance">ENTRANCE</span></div></aside>
+    <div id="message" role="status" aria-live="polite"></div><button id="interact" type="button" hidden></button>
+    <div id="aim-reticle" hidden aria-hidden="true"></div>
+    <section id="touch-controls" hidden aria-label="Điều khiển cảm ứng">
+      <div id="move-stick" role="group" aria-label="Joystick di chuyển"><span id="stick-knob"></span><small>DI CHUYỂN</small></div>
+      <div id="touch-actions">
+        <button type="button" data-touch-code="KeyR" hidden>Quấn dây</button>
+        <button type="button" data-touch-charge hidden>Giữ để ném</button>
+        <button type="button" data-touch-code="ArrowUp" hidden>Bước tới ↑</button>
+        <button type="button" data-touch-code="ArrowDown" hidden>Bước lùi ↓</button>
+        <button type="button" data-touch-code="Space">Nhảy</button>
+      </div>
+      <span id="touch-look-hint">Vuốt vùng trống để nhìn</span>
+      <button type="button" id="touch-pause" aria-label="Tạm dừng">Ⅱ</button>
+    </section>
+    <div data-pointer-lock-hint hidden>Click the village to look around · E interact · Esc pause</div>
+    <section id="activity-hud" hidden></section><section id="overlay" aria-label="Festival menu"></section>
+    <section id="critical-error" role="alert" hidden></section>
+  </main>
+  <!-- soonlab:source-scripts:start -->
+<script src="./vendor/three.global.js"></script>
+<script src="./vendor/three.runtime-support.js"></script>
+<script src="./data/config.js"></script>
+<script src="./data/assets.js"></script>
+<script src="./vendor/leaderboard.runtime-support.js"></script>
+<script src="./scripts/core.js"></script>
+<script src="./scripts/input.js"></script>
+<script src="./scripts/audio.js"></script>
+<script src="./scripts/renderer.js"></script>
+<script src="./scripts/ui.js"></script>
+<script src="./scripts/gameplay.js"></script>
+<script src="./scripts/test-hook.js"></script>
+<script src="https://resource.utdownload.com/soonlab/web/scripts/soonlab-game-runtime-bridge.js"></script>
+<script src="./scripts/game.js"></script>
+<!-- soonlab:source-scripts:end -->
+</body>
+</html>

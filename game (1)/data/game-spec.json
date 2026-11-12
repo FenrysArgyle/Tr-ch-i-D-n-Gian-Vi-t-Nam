@@ -1,0 +1,896 @@
+{
+  "specVersion": "1.0.0",
+  "approvalStatus": "approved",
+  "approvedScope": "Desktop landscape solo first-person Vietnamese folk festival with free exploration, all seven complete activities, AI, Noob/Pro/Hacker/God, seven stamps, English instructions, traditional-inspired music and sound, session records plus a highest ten-throw score leaderboard; no multiplayer or accounts.",
+  "title": "Lễ Hội Trò Chơi Dân Gian Miền Quê Việt Nam",
+  "description": "Explore a sunlit Vietnamese village festival in first person, challenge AI across seven folk activities and earn all seven festival stamps.",
+  "renderMode": "threejs-3d",
+  "gameType": "first-person-folk-festival",
+  "genre": [
+    "First-person exploration and folk mini-game collection"
+  ],
+  "inGameLanguage": "en",
+  "targetDeviceMode": "single-device",
+  "targetDevices": [
+    {
+      "type": "desktop-browser",
+      "orientation": "landscape"
+    }
+  ],
+  "playerFantasy": "A festival visitor learning and competing at traditional rural Vietnamese games.",
+  "objective": "Earn one stamp from each of seven activities, then celebrate and continue exploring or replay.",
+  "progression": "Seven distinct permanent-in-session stamps; activity scores and session records; full festival restart clears the festival run, not approved external records.",
+  "failureState": "Activity failures allow retry without removing earned stamps. No global death or timer.",
+  "visualDirection": "Bright sunlit low-poly Vietnamese rural village, limewashed gate, terracotta communal pavilion, banyan tree, earth paths and colorful festival flags; warm wood, bamboo, cloth and readable chalk arenas. Code-native articulated 3D geometry and live DOM interface; no authored screen-space images.",
+  "presentationContract": {
+    "orientation": "landscape",
+    "viewportMode": "fill",
+    "coordinateSpace": "world-3d",
+    "layoutAuthority": "Village layout, activity world transforms and camera mode in data/config.json; state-driven DOM HUD and overlays."
+  },
+  "threeDContract": {
+    "projection": "perspective",
+    "cameraMode": "first-person",
+    "reticleFraming": "none",
+    "controlFrame": "camera-horizontal",
+    "movementSpace": "planar",
+    "worldUp": "y",
+    "visualForward": "local -Z",
+    "pointerMode": "relative-delta",
+    "timing": {
+      "simulation": "fixed-step",
+      "stepHz": 60,
+      "maxFrameDeltaMs": 250,
+      "maxSubSteps": 5
+    },
+    "collision": {
+      "authority": "gameplay",
+      "model": "All solids mutually block including same-role dynamic bodies. Ground supports walking and equipment; world boundary, buildings, gate posts, banyan trunk and booth fixtures block traversal. Tops collide using gameplay-owned velocities, angular spin and contact-onset resolution. Balls are solid projectiles; interaction zones, ring aperture, dance clamps and push boundary are non-blocking triggers. Cloth, held visuals, chalk and transient debris are decorative and do not create extra gameplay bodies.",
+      "bodyRoles": [
+        {
+          "role": "world-floor",
+          "kind": "solid",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "world-boundary",
+          "kind": "solid",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "village-building",
+          "kind": "solid",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "gate-post",
+          "kind": "solid",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "banyan-trunk",
+          "kind": "solid",
+          "shape": "capsule",
+          "mobility": "static"
+        },
+        {
+          "role": "booth-fixture",
+          "kind": "solid",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "player",
+          "kind": "solid",
+          "shape": "capsule",
+          "mobility": "dynamic"
+        },
+        {
+          "role": "ai-participant",
+          "kind": "solid",
+          "shape": "capsule",
+          "mobility": "dynamic"
+        },
+        {
+          "role": "top-projectile",
+          "kind": "solid",
+          "shape": "sphere",
+          "mobility": "dynamic"
+        },
+        {
+          "role": "con-projectile",
+          "kind": "solid",
+          "shape": "sphere",
+          "mobility": "dynamic"
+        },
+        {
+          "role": "equipment-pickup",
+          "kind": "trigger",
+          "shape": "sphere",
+          "mobility": "dynamic"
+        },
+        {
+          "role": "activity-entry",
+          "kind": "trigger",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "con-aperture",
+          "kind": "trigger",
+          "shape": "box",
+          "mobility": "static"
+        },
+        {
+          "role": "push-boundary",
+          "kind": "trigger",
+          "shape": "sphere",
+          "mobility": "static"
+        },
+        {
+          "role": "sap-clamp",
+          "kind": "trigger",
+          "shape": "box",
+          "mobility": "dynamic"
+        },
+        {
+          "role": "sap-finish",
+          "kind": "trigger",
+          "shape": "box",
+          "mobility": "static"
+        }
+      ]
+    },
+    "qualityProfile": {
+      "maxPixelRatio": 2,
+      "resizeObserver": true,
+      "contextRecovery": true,
+      "resourceTracking": true
+    }
+  },
+  "approvedProcedural3DCoverage": {
+    "groups": [
+      {
+        "name": "festival-anchors",
+        "count": 1
+      },
+      {
+        "name": "participants",
+        "count": 3
+      },
+      {
+        "name": "equipment",
+        "count": 2
+      },
+      {
+        "name": "top-game",
+        "count": 1
+      },
+      {
+        "name": "board-game",
+        "count": 1
+      },
+      {
+        "name": "throw-game",
+        "count": 2
+      },
+      {
+        "name": "push-game",
+        "count": 1
+      },
+      {
+        "name": "dance-game",
+        "count": 1
+      }
+    ],
+    "total": 12
+  },
+  "requiredProcedural3DRoles": [
+    "festival-gate",
+    "player-hands",
+    "festival-opponent",
+    "bamboo-handler",
+    "top-chest",
+    "wooden-top",
+    "quan-board",
+    "con-basket",
+    "con-ball",
+    "con-ring",
+    "push-arena",
+    "sap-track"
+  ],
+  "procedural3DArt": {
+    "briefVersion": 2,
+    "profile": {
+      "shapeLanguage": "Layered low-poly forms, tapered timber and bamboo, curved terracotta eaves, clear negative space at hands and game targets.",
+      "materialLanguage": "Warm matte wood and bamboo, pale limewash, earth ochre, terracotta, cream cloth and restrained red yellow teal accents; chalk is clearly visible on dirt.",
+      "lighting": "Warm afternoon key light plus generous sky fill; primary gameplay surfaces stay readable with soft contact shadows.",
+      "motionTone": "Tactile anticipation, physical contact and clear recovery; villagers articulate at shoulders, elbows, hips and knees, not rigid whole-body slides."
+    },
+    "anchorRole": "festival-gate",
+    "roles": [
+      {
+        "role": "festival-gate",
+        "coverageGroup": "festival-anchors",
+        "bodyForm": "Two substantial limewashed posts frame an open timber gateway with layered terracotta eaves and cloth banners.",
+        "proportionCue": "Gateway opening is several adult widths with slim upper eaves.",
+        "silhouetteCue": "Open center, upward roof tips and asymmetrical hanging festival flags.",
+        "functionalParts": [
+          "posts",
+          "lintel",
+          "layered roof",
+          "welcome banner",
+          "flag poles"
+        ],
+        "motionCues": [
+          "cloth sways gently without moving structural collision"
+        ]
+      },
+      {
+        "role": "player-hands",
+        "coverageGroup": "participants",
+        "bodyForm": "Two cuffed forearms end in articulated palms and fingers around a single held object.",
+        "proportionCue": "Hands remain smaller than equipment and occupy the lower view edge.",
+        "silhouetteCue": "Separated fingers and alternating open palm and gripping silhouettes.",
+        "functionalParts": [
+          "forearms",
+          "wrist pivots",
+          "palms",
+          "finger groups"
+        ],
+        "motionCues": [
+          "grasp and release equipment",
+          "wrap rope around top",
+          "wind up and release throws",
+          "sow stones with discrete hand passes",
+          "grip pushing stick",
+          "trip and recover through brief camera and arm motion"
+        ]
+      },
+      {
+        "role": "festival-opponent",
+        "coverageGroup": "participants",
+        "bodyForm": "Adult villager with layered tunic torso, tapered sleeves, separate hands, trousers and grounded feet.",
+        "proportionCue": "Adult human proportions with hands visibly contacting tools.",
+        "silhouetteCue": "Conical hat and open elbow gaps distinguish the villager from equipment.",
+        "functionalParts": [
+          "head",
+          "hat",
+          "torso",
+          "shoulder pivots",
+          "elbow pivots",
+          "hands",
+          "hip pivots",
+          "legs",
+          "feet"
+        ],
+        "motionCues": [
+          "launch spinning top with preparation and recovery",
+          "sit and sow stones",
+          "brace push and recover while gripping stick",
+          "step beyond circle on defeat"
+        ]
+      },
+      {
+        "role": "bamboo-handler",
+        "coverageGroup": "participants",
+        "bodyForm": "Seated adult in an ao ba ba tunic with bent legs and both hands attached visually to pole ends.",
+        "proportionCue": "Low seated body with arms reaching beyond knees.",
+        "silhouetteCue": "Bent elbow triangles and straw hat above low bamboo rails.",
+        "functionalParts": [
+          "head",
+          "hat",
+          "torso",
+          "upper arms",
+          "forearms",
+          "hands",
+          "bent legs"
+        ],
+        "motionCues": [
+          "open poles",
+          "tap twice",
+          "close on clap",
+          "recover to open poles"
+        ]
+      },
+      {
+        "role": "top-chest",
+        "coverageGroup": "equipment",
+        "bodyForm": "Wide plank chest with raised rim, hinged arched lid and visible top compartments.",
+        "proportionCue": "Low waist-height container wider than deep.",
+        "silhouetteCue": "Open lid and separated compartment openings.",
+        "functionalParts": [
+          "plank body",
+          "feet",
+          "rim",
+          "hinged lid",
+          "top compartments"
+        ],
+        "motionCues": [
+          "lid responds when equipment is collected"
+        ]
+      },
+      {
+        "role": "wooden-top",
+        "coverageGroup": "top-game",
+        "bodyForm": "Lathed pear-shaped wood body with narrow metal tip, stepped crown and wound rope.",
+        "proportionCue": "Wide upper shoulder tapers strongly to a small contact tip.",
+        "silhouetteCue": "Round crown, pointed foot and protruding rope end.",
+        "functionalParts": [
+          "wood body",
+          "crown",
+          "metal tip",
+          "rope coil",
+          "rope tail"
+        ],
+        "motionCues": [
+          "rope winds in preparation",
+          "angular spin with visible precession",
+          "collision recoil",
+          "wobble as spin decays",
+          "split into two or three wood pieces after break roll"
+        ]
+      },
+      {
+        "role": "quan-board",
+        "coverageGroup": "board-game",
+        "bodyForm": "Chalk rectangle on dirt with ten small cells and two semicircular end cells containing distinct pebbles and mandarin stones.",
+        "proportionCue": "Long board with equal small cells and larger rounded ends.",
+        "silhouetteCue": "Two rows of five square pits between curved mandarin ends.",
+        "functionalParts": [
+          "chalk boundary",
+          "ten small cells",
+          "two mandarin cells",
+          "small pebbles",
+          "large mandarin stones",
+          "capture trays"
+        ],
+        "motionCues": [
+          "pebbles move sequentially during sowing",
+          "captures travel into the correct tray",
+          "selected pit and direction respond visibly"
+        ]
+      },
+      {
+        "role": "con-basket",
+        "coverageGroup": "equipment",
+        "bodyForm": "Woven low basket with a thick braided rim and separated colorful ribboned balls.",
+        "proportionCue": "Broad basket mouth several ball widths across.",
+        "silhouetteCue": "Open circular mouth and lifted rim around rounded contents.",
+        "functionalParts": [
+          "woven body",
+          "braided rim",
+          "base",
+          "stored balls"
+        ],
+        "motionCues": [
+          "ball visibly leaves basket on pickup"
+        ]
+      },
+      {
+        "role": "con-ball",
+        "coverageGroup": "throw-game",
+        "bodyForm": "Fabric ball with four joined color panels, cord knot and trailing cloth ribbons.",
+        "proportionCue": "Compact ball with ribbons longer than its diameter.",
+        "silhouetteCue": "Round cloth head and distinct trailing streamers.",
+        "functionalParts": [
+          "fabric body",
+          "panel seams",
+          "cord knot",
+          "ribbons"
+        ],
+        "motionCues": [
+          "ribbons trail during flight",
+          "held windup",
+          "release",
+          "ground bounce and settle"
+        ]
+      },
+      {
+        "role": "con-ring",
+        "coverageGroup": "throw-game",
+        "bodyForm": "Tall segmented bamboo pole supports an open circular ring wrapped in red and yellow paper.",
+        "proportionCue": "Thin high support with a ring wide enough to read against the sky.",
+        "silhouetteCue": "True open center above a tapered segmented pole.",
+        "functionalParts": [
+          "pole segments",
+          "support lashings",
+          "ring frame",
+          "red paper band",
+          "yellow paper band"
+        ],
+        "motionCues": [
+          "subtle paper flutter",
+          "brief hit response leaves scoring aperture stable"
+        ]
+      },
+      {
+        "role": "push-arena",
+        "coverageGroup": "push-game",
+        "bodyForm": "Chalk boundary surrounds two starting marks and a long bamboo staff initially supported by low wooden stands.",
+        "proportionCue": "Staff spans between opponents at waist height.",
+        "silhouetteCue": "Open circular arena, paired stands and a long horizontal staff.",
+        "functionalParts": [
+          "chalk circle",
+          "start marks",
+          "bamboo staff",
+          "grip sections",
+          "two stands"
+        ],
+        "motionCues": [
+          "staff follows shared push position",
+          "hands remain connected to grips",
+          "opponent crosses boundary on defeat"
+        ]
+      },
+      {
+        "role": "sap-track",
+        "coverageGroup": "dance-game",
+        "bodyForm": "Repeated paired bamboo poles on low support rails form an open stepping corridor.",
+        "proportionCue": "Poles run across a track several adult steps long.",
+        "silhouetteCue": "Alternating open gaps and paired closed bamboo bars.",
+        "functionalParts": [
+          "support rails",
+          "paired poles",
+          "bamboo nodes",
+          "safe start pad",
+          "finish marker"
+        ],
+        "motionCues": [
+          "four-beat open open close recovery cycle",
+          "pole collision follows actual closing motion",
+          "trip and restart feedback"
+        ]
+      }
+    ]
+  },
+  "gameplayContract": {
+    "states": [
+      "ready",
+      "exploring",
+      "top-preparation",
+      "top-active",
+      "top-result",
+      "quan-turn",
+      "quan-result",
+      "con-aim",
+      "con-flight",
+      "con-result",
+      "push-active",
+      "push-result",
+      "sap-active",
+      "sap-result",
+      "paused",
+      "festival-complete",
+      "stilts-active",
+      "stilts-result",
+      "crossbow-active",
+      "crossbow-result"
+    ],
+    "actions": [
+      "WASD or arrows move camera-relative; mouse looks in exploration and throwing modes; Space jumps.",
+      "E raycasts nearby equipment or booth to pick up, retrieve or enter; inventory capacity one; show current interaction target.",
+      "R holds rope wrapping; left mouse starts/releases oscillating launch power. Con uses hold left mouse and release; predicted trajectory follows current force and aim.",
+      "Mouse selects a legal own-side board pit then clockwise/counter-clockwise direction; explicit commit action begins animated sowing.",
+      "Space or click/touch times the circular stick-pushing QTE; D/F/J/K or the random circular touch prompt times grounded bamboo-dance steps while ordinary walking is suspended.",
+      "Escape pauses, releases pointer lock and clears held inputs. Resume via visible user-gesture button restores the relevant view and mode.",
+      "DOM buttons choose difficulty, activity retry, return to village, full festival restart and shared audio mute."
+    ],
+    "controls": {
+      "movement": "WASD / arrows",
+      "look": "mouse",
+      "interact": "E",
+      "jumpAndRhythm": "Space",
+      "wrap": "R",
+      "throwAndSelect": "left mouse",
+      "pause": "Escape",
+      "bambooDance": "D / F / J / K: step to next tile without jumping",
+      "stilts": "Q left foot / E right foot, alternate on the beat",
+      "crossbow": "Mouse or touch drag aims; left click / Space / touch fire shoots"
+    },
+    "mechanics": [
+      "Welcome chooses Noob, Pro, Hacker or God; start at festival gate. Free camera-horizontal walking, one held item, nearby raycast E interactions and clear booth signs. No automatic booth teleport from a menu.",
+      "Use explicit GameManager, PlayerState and MiniGameBase-style state ownership. Activity entry saves the exploration pose; exit restores movement and pointer recovery. Board uses overhead selection; pushing uses over-the-shoulder view; exploration remains first person.",
+      "Earn top stamp by outlasting an AI top; quan by winning; con by at least one hit in ten throws; pushing by pushing AI outside circle; sap by reaching track end. Failed or tied activities offer retry. All seven unique stamps trigger festival completion; continue exploring is available.",
+      "Top chest provides replacement only when not already holding equipment. Wrap rope to completion before launch, then time oscillating power and aim. Integrate top translational velocity, angular velocity, spin decay, friction and wobble in fixed steps; gyroscopic stability is a spin-dependent gameplay approximation, not an external rigid-body engine. Simultaneous AI tops collide with relative velocity response. Roll exactly one 0.05 break probability on each new top-pair contact, not each frame. A successful break shatters the impacted top into two or three visible wood pieces. When stopped, walk over and press E to retrieve; when broken return to chest. Rewrap before every launch.",
+      "Quan begins on 12 cells: two rows of five small pits each containing five pebbles plus two end mandarin cells each containing one mandarin worth ten points. Select a nonempty own-side small pit and either sowing direction, distributing one stone per following cell including mandarin cells. After the final stone, if the next cell is a nonempty small pit, lift and relay it; if it is a mandarin cell stop; if it is empty and the following cell contains stones capture the following cell and continue testing alternating empty/occupied cells; stop on consecutive empties. A mandarin next-cell never starts a relay. When both mandarin cells are empty the game ends and each side collects remaining own-side small stones. Refill an empty own row with one pebble per pit from captures before its turn; record any borrowed shortfall and repay at final scoring. Highest final value wins, ties are draws. Sequential sowing and capture animation gates input. AI chooses only legal cells and directions.",
+      "Quan AI opponent has a stable per-match identity. Consecutive wins against the same identity increment streak once only; subsequent repeated wins do not increment it. A loss resets streak; show score, counted/noncounted reason and session best streak. Do not simulate online opponents.",
+      "Con: collect one ribboned ball from basket and charge an oscillating power meter while showing a gravity-based parabolic arc. Release velocity equals aimed direction times charge power. Score +1 only when the moving ball crosses the ring plane through the inner aperture, using swept segment crossing to prevent tunnelling or repeat awards. Each of ten resolved throws consumes one attempt; floor settlement or out of bounds resolves a miss. Collect a ball from basket between attempts. Final score is integer 0 through 10, valid even when zero. Highest-score leaderboard submits only con-result; unavailable connectivity never blocks play. Session total, best ten-throw score and hit streak remain visible.",
+      "Push: circular timing ring, red target arc and rotating green orb. SPACE or click/touch yields PERFECT at the center, GOOD inside, MISS outside or on an unanswered pass. Success adds 3–8 percentage points; misses stun, reset combo and cede ground. Every two successive hits advances C/B/A/S/SS/SSS, increasing rotation speed and narrowing the target. Start 50/50; percentage moves both crouching actors and the staff on the ground; 100 wins and 0 loses outside the chalk circle. Semi-random AI successes push back. Enemy rushing lasts five seconds and doubles AI force unless rank S or higher is maintained.",
+      "Sap: press F/G/H/J or tap the random circular prompt when its shrinking approach ring meets the inner circle. A wrong, early or unanswered prompt closes the poles around the feet, displays a stumble and resets the route after a short recovery. Noob/Pro/Hacker/God require 8/12/16/20 jumps with progressively faster notes and tighter timing. Successful grounded steps divide the same physical route into the required number of steps. Reach the required count to win.",
+      "Noob has instructional prompts, aim help, slow meters, lenient rhythm and gentle AI. Pro reduces assistance, tightens timing and improves legal AI decisions. Hacker removes most assistance with fast meters and precise beats. God has strict but attainable timing, no aim correction and strongest fair AI. Difficulty never changes traditional board rules, con scoring, ten-throw round length or 5% top-break probability. Hacker is a tier name only.",
+      "Difficulty tuning is ordered and configuration-owned: meter oscillation accelerates and timing windows narrow monotonically; AI reaction/decision quality improves without hidden information or cheating. Rhythm is clock-based and paused atomically with gameplay and audio cues.",
+      "Pause stops physics, rhythm and AI, clears pending click/hold state and avoids unintended throws on resume. Activity retry resets its timers, opponents and resources; festival restart clears stamps and active activity and returns to welcome. Render fill container with accessible readable instructions, scoring, item slot, stamp HUD, focus-visible buttons and no page scrolling. Mouse lock loss offers a click-to-resume path.",
+      "BGM and approved SFX start only after user interaction; shared visible mute persists across activity restart. Optional hosted music and leaderboard failures keep a complete playable local experience and expose a truthful warning. Local Three.js and shared spatial runtime are the only code dependencies; no Cannon.js, remote engine, ES modules or startup JSON fetch.",
+      "Đi Cà Kheo: alternate Q then E on visible rhythmic beats; wrong foot, early/late input or a missed beat causes a visible fall and round loss. Noob/Pro/Hacker/God courses are 12/16/20/24 metres, with 12/16/20/24 steps and progressively tighter beat windows. Earn a stamp on reaching the finish.",
+      "Bắn Nỏ: aim a visible crossbow at the center of a distant 3D target; arrows fly to the aimed point and count only within the central scoring disk. Noob needs 3/5, Pro 3/3, Hacker 5/5, God 7/7. Resolve after all arrows land; show hits, arrows and feedback. Earn a stamp when the quota is reached."
+    ],
+    "audioEvents": [
+      "footstep",
+      "jump",
+      "land",
+      "pickup",
+      "equip",
+      "whoosh",
+      "hit",
+      "break",
+      "dig",
+      "clap",
+      "alert",
+      "victory",
+      "ui-click",
+      "ambience"
+    ],
+    "complexCharacterActions": [],
+    "proofFields": [
+      "difficulty",
+      "activeActivity",
+      "playerPosition",
+      "cameraMode",
+      "pointerLocked",
+      "heldItem",
+      "interactionTarget",
+      "stamps",
+      "topWrapped",
+      "topSpin",
+      "topContactRolls",
+      "topBroken",
+      "topRetrieved",
+      "quanCells",
+      "quanScores",
+      "quanTurn",
+      "quanLegalMoves",
+      "quanOpponentId",
+      "quanStreak",
+      "quanStreakCounted",
+      "conAttempt",
+      "conHits",
+      "conTrajectory",
+      "conRingCrossing",
+      "pushGrade",
+      "pushDisplacement",
+      "sapBeat",
+      "sapProgress",
+      "sapTrip",
+      "finalScore",
+      "leaderboard",
+      "audioMuted",
+      "stiltsProgress",
+      "stiltsTargetSteps",
+      "stiltsExpectedFoot",
+      "stiltsClock",
+      "stiltsFallen",
+      "crossbowHits",
+      "crossbowShots",
+      "crossbowRequired",
+      "crossbowTotal",
+      "crossbowLastShot"
+    ],
+    "acceptanceCriteria": [
+      "Ready state shows objective and all four difficulty tiers; start spawns at gate with seven identifiable reachable activity booths.",
+      "Forward follows horizontal mouse view; strafing and backing do not rotate camera. Jumping, one-item inventory, nearby E interactions, pause/resume and pointer-lock recovery work.",
+      "All seven activities can reach a genuine win/result and return to village; earned unique stamps persist until full restart. Seven stamps produce completion with replay.",
+      "Top requires physical chest pickup, wrapping and timed launch; AI top coexists, new contact rolls preserve 5%, break yields two or three pieces, stopped equipment requires walking retrieval and rewrapping.",
+      "Quan enforces 12-cell sow, relay, capture, refill/debt and end settlement; AI moves legally; visible hand sowing matches cell data; repeated same-opponent wins do not farm streak.",
+      "Con trajectory matches configured gravity, ring aperture crossing scores once, ten throws always produce a valid 0-10 result, including all misses. Highest-score UI reports network failure nonblockingly and supports canonical anonymous nickname behavior.",
+      "Push timing displays all four grades; AI competes fairly; actual displacement and chalk boundary determine win/loss, and restart clears old notes.",
+      "Sap poles animate in four beats, physical closure causes visible stumble and reset, correctly timed inputs allow finish.",
+      "Higher difficulty changes assists, meter speed, beat windows and AI fairly without changing stated traditional rules or top-break chance.",
+      "Sunlit low-poly geometry preserves declared functional parts, joint motion and hand/tool contact; no replacement of hub with a menu collection.",
+      "Mandatory DOM controls remain visible at wide, narrow and short desktop viewports with a fill renderer and no page scroll; mouse target alignment remains correct after resize.",
+      "Music, stone sliding, top impacts/break, bamboo clap and all approved event sounds trigger at real actions; a visible shared mute works across states; unavailable remote resources do not block gameplay.",
+      "Pause freezes all gameplay clocks; activity restart and full festival restart reset the intended scope with no stale held inputs.",
+      "Sap correct D/F/J/K inputs move smoothly to the next tile while the player remains on the ground.",
+      "Stilts alternating timed inputs win each course; wrong, early, late and missed steps lose; retry and pause preserve their defined scopes.",
+      "Crossbow quotas match all four tiers, center-plane intersection and obstruction determine actual hits; misses consume arrows; shots cannot exceed the allowance; retry clears arrows and scores."
+    ]
+  },
+  "leaderboard": {
+    "enabled": true,
+    "scoreLabel": "Ring hits",
+    "submitStates": [
+      "con-result"
+    ]
+  },
+  "audioDirection": {
+    "enabled": true,
+    "bgmEnabled": true,
+    "selectionMode": "scene-v1",
+    "sceneBrief": {
+      "overall": "A welcoming sunlit Vietnamese rural folk festival with bamboo flutes, monochord-like plucked strings and festive drums. Music stays gentle under instructions and clear timing cues. Earth footsteps, wooden tops, sliding pebbles and bamboo claps provide tactile feedback without speech or modern weapon sounds.",
+      "bgm": {
+        "context": "Loop during village exploration and activities after user gesture; duck behind rhythm cues so beat grading remains clear.",
+        "sound": "Traditional-inspired Vietnamese folk instrumental, bamboo flute and plucked monochord-like string color over warm light festival drums. Cheerful, unhurried exploration with a steady pulse, no vocals and no heavy electronic lead.",
+        "queryGroups": [
+          [
+            "Vietnamese folk",
+            "Vietnamese traditional music",
+            "Vietnam folk instrumental"
+          ],
+          [
+            "bamboo flute",
+            "dan bau",
+            "monochord",
+            "flute"
+          ],
+          [
+            "festival",
+            "drum",
+            "percussion"
+          ]
+        ]
+      },
+      "events": {
+        "footstep": {
+          "context": "Walking on packed village earth.",
+          "sound": "Soft dry soil steps, not hard boot stomps.",
+          "queryGroups": [
+            [
+              "footstep",
+              "footsteps",
+              "walk"
+            ],
+            [
+              "dirt",
+              "earth",
+              "soil"
+            ]
+          ]
+        },
+        "jump": {
+          "context": "Player leaves the ground or performs a timed dance jump.",
+          "sound": "Brief upward effort or light movement cue.",
+          "queryGroups": [
+            [
+              "jump",
+              "hop"
+            ],
+            [
+              "movement"
+            ]
+          ]
+        },
+        "land": {
+          "context": "Jump landing and non-injurious dance stumble.",
+          "sound": "Short grounded dirt thump.",
+          "queryGroups": [
+            [
+              "land",
+              "landing"
+            ],
+            [
+              "dirt",
+              "ground",
+              "thump"
+            ]
+          ]
+        },
+        "pickup": {
+          "context": "Collect top or ball, or retrieve stopped equipment.",
+          "sound": "Small wooden or cloth equipment handling cue.",
+          "queryGroups": [
+            [
+              "pickup",
+              "pick up",
+              "collect"
+            ],
+            [
+              "wood",
+              "cloth",
+              "object"
+            ]
+          ]
+        },
+        "equip": {
+          "context": "Wrap top rope or grip the pushing stick.",
+          "sound": "Dry rope rub or bamboo handling, no weapon sounds.",
+          "queryGroups": [
+            [
+              "equip",
+              "handle",
+              "grip"
+            ],
+            [
+              "rope",
+              "bamboo",
+              "wood"
+            ]
+          ]
+        },
+        "whoosh": {
+          "context": "Top or ball release and fast flight.",
+          "sound": "Short airy throw swish that does not mask rhythm.",
+          "queryGroups": [
+            [
+              "whoosh",
+              "swish",
+              "throw"
+            ],
+            [
+              "air",
+              "movement"
+            ]
+          ]
+        },
+        "hit": {
+          "context": "Top collision or confirmed scored throw.",
+          "sound": "Crisp compact wooden knock, not gunfire.",
+          "queryGroups": [
+            [
+              "hit",
+              "impact",
+              "knock"
+            ],
+            [
+              "wood",
+              "wooden"
+            ]
+          ]
+        },
+        "break": {
+          "context": "Five-percent top collision break event.",
+          "sound": "Two or three dry wood cracks and falling fragments.",
+          "queryGroups": [
+            [
+              "break",
+              "crack",
+              "snap"
+            ],
+            [
+              "wood",
+              "wooden"
+            ]
+          ]
+        },
+        "dig": {
+          "context": "Pebbles are sown into or captured from board cells.",
+          "sound": "Quiet small stone slide and rattle on dry dirt.",
+          "queryGroups": [
+            [
+              "stone",
+              "pebble",
+              "gravel"
+            ],
+            [
+              "slide",
+              "rattle",
+              "scatter"
+            ]
+          ]
+        },
+        "clap": {
+          "context": "Bamboo poles close and rhythm beat cues fire.",
+          "sound": "Clear hollow bamboo clack aligned with the gameplay clock.",
+          "queryGroups": [
+            [
+              "clap",
+              "clack",
+              "tap"
+            ],
+            [
+              "bamboo",
+              "wood"
+            ]
+          ]
+        },
+        "alert": {
+          "context": "Mistimed rhythm beat or invalid board selection.",
+          "sound": "Brief gentle negative feedback, distinct from success.",
+          "queryGroups": [
+            [
+              "alert",
+              "error",
+              "failure"
+            ],
+            [
+              "game",
+              "notification"
+            ]
+          ]
+        },
+        "victory": {
+          "context": "Activity stamp earned, board win or five-stamp festival completion.",
+          "sound": "Warm concise celebration with folk percussion and flute color.",
+          "queryGroups": [
+            [
+              "victory",
+              "success",
+              "celebration"
+            ],
+            [
+              "flute",
+              "percussion"
+            ]
+          ]
+        },
+        "ui-click": {
+          "context": "Menu, difficulty, direction and restart selection.",
+          "sound": "Clean quiet short button click.",
+          "queryGroups": [
+            [
+              "button",
+              "click"
+            ],
+            [
+              "interface"
+            ]
+          ]
+        },
+        "ambience": {
+          "context": "Free exploration between festival booths.",
+          "sound": "Light outdoor breeze and distant nonverbal festival bustle; no speech required.",
+          "queryGroups": [
+            [
+              "ambience",
+              "ambient"
+            ],
+            [
+              "village",
+              "outdoor",
+              "festival"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "scope": {
+    "included": [
+      "Desktop landscape",
+      "True 3D first-person village",
+      "All seven activities",
+      "Solo legal AI",
+      "Four difficulty tiers",
+      "Seven-stamp progression",
+      "Traditional-inspired music and activity SFX",
+      "Anonymous highest ring-score leaderboard plus session records"
+    ],
+    "excluded": [
+      "Live online multiplayer",
+      "Local multiplayer",
+      "Accounts",
+      "Mobile controls",
+      "External physics libraries",
+      "Remote runtime code other than approved hosted bridge"
+    ]
+  },
+  "difficultyTuning": {
+    "Noob": {
+      "powerCycleSeconds": 3,
+      "perfectWindowMs": 120,
+      "greatWindowMs": 200,
+      "goodWindowMs": 300,
+      "aimAssistDegrees": 7,
+      "aiStrength": 0.25
+    },
+    "Pro": {
+      "powerCycleSeconds": 2.4,
+      "perfectWindowMs": 80,
+      "greatWindowMs": 140,
+      "goodWindowMs": 220,
+      "aimAssistDegrees": 3,
+      "aiStrength": 0.5
+    },
+    "Hacker": {
+      "powerCycleSeconds": 1.8,
+      "perfectWindowMs": 55,
+      "greatWindowMs": 100,
+      "goodWindowMs": 160,
+      "aimAssistDegrees": 0,
+      "aiStrength": 0.75
+    },
+    "God": {
+      "powerCycleSeconds": 1.3,
+      "perfectWindowMs": 35,
+      "greatWindowMs": 70,
+      "goodWindowMs": 110,
+      "aimAssistDegrees": 0,
+      "aiStrength": 0.95
+    }
+  },
+  "assetContractVersion": 2
+}

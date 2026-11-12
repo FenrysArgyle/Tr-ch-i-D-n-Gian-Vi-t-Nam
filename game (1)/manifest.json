@@ -1,0 +1,17 @@
+{
+  "createdAt": "2026-11-09T13:45:31.676Z",
+  "description": "Explore a sunlit Vietnamese village festival in first person, challenge AI across seven folk activities and earn all seven festival stamps.",
+  "directOpen": true,
+  "entry": "index.html",
+  "gameType": "first-person-folk-festival",
+  "name": "Lễ Hội Trò Chơi Dân Gian Miền Quê Việt Nam",
+  "renderer": "threejs-3d",
+  "slug": "vietnamese-folk-festival",
+  "sourceLayout": {
+    "entry": "scripts/game.js",
+    "format": "classic-multi-script-v1"
+  },
+  "updatedAt": "2026-11-09T13:45:31.676Z",
+  "usesLocalVendor": true,
+  "version": "1.0.0"
+}
