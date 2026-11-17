@@ -605,22 +605,102 @@
     function houseSolid(name,position,size,color) {
       const root=worldBox("village-building",[position[2]+10,position[1],5-position[0]],[size[2],size[1],size[0]],color); root.name=name; return root;
     }
-    houseSolid("house-back-wall",[53,0,-10],[0.28,4.6,18],"#d8bb86");
+    houseSolid("house-back-wall",[53,0,-10],[0.28,4.6,18],"#805333");
+    villageHouse.userData.architectureReferences=game.assets.filter(asset=>asset.role==="traditional-house-reference").map(asset=>asset.path);
+    const woodwork=new THREE.Group(); woodwork.name="traditional-house-woodwork"; woodwork.userData.lowDetailHidden=true; villageHouse.add(woodwork);
     for(const side of [-1,1]) {
-      houseSolid("house-side-wall",[46,0,-10+side*9],[14,4.6,0.28],"#e6d0a5");
-      houseSolid("house-front-wall",[39,0,-10+side*5.5],[0.28,4.6,7],"#e6d0a5");
+      const gableShape=new THREE.Shape();
+      gableShape.moveTo(-7.14,4.4); gableShape.lineTo(7.14,4.4);
+      for(let sample=24;sample>=0;sample--) {
+        const boardX=-7.14+sample*14.28/24;
+        const slope=Math.max(Math.abs(boardX)/10.3,0.4);
+        gableShape.lineTo(boardX,9.3-5.6*slope+1.35*slope**3);
+      }
+      gableShape.closePath();
+      const gableGeometry=tracker.track(new THREE.ExtrudeGeometry(gableShape,{depth:0.32,bevelEnabled:false}));
+      const gable=new THREE.Mesh(gableGeometry,material("#68452f"));
+      gable.name="sealed-timber-gable"; gable.position.z=side*9-0.16; gable.castShadow=true; gable.receiveShadow=true; villageHouse.add(gable);
+      mesh(villageHouse,"box",[14.3,0.3,0.42],"#483021",[0,4.51,side*9]);
+      for(let board=0;board<28;board++) {
+        const boardX=-6.75+board*0.5, slope=Math.max(Math.abs(boardX)/10.3,0.4);
+        const top=9.3-5.6*slope+1.35*slope**3;
+        mesh(woodwork,"box",[0.027,top-4.5,0.018],"#483021",[boardX,(top+4.5)/2,side*9.17]);
+        mesh(woodwork,"box",[0.025,4.35,0.018],"#684128",[boardX,2.2,side*9.15]);
+      }
+      for(let board=0;board<36;board++) {
+        const boardZ=-8.75+board*0.5;
+        mesh(woodwork,"box",[0.018,4.35,0.025],"#684128",[7.15,2.2,boardZ]);
+        if(Math.abs(boardZ)>2.05) mesh(woodwork,"box",[0.018,4.35,0.025],"#684128",[-7.15,2.2,boardZ]);
+      }
+      for(const corner of [-1,1]) mesh(villageHouse,"box",[0.38,4.6,0.38],"#58391f",[corner*6.9,2.3,side*8.86]);
+      houseSolid("house-side-wall",[46,0,-10+side*9],[14,4.6,0.28],"#986440");
+      houseSolid("house-front-wall",[39,0,-10+side*5.5],[0.28,4.6,7],"#986440");
       houseSolid("house-door-post",[38.9,0,-10+side*2.15],[0.4,4.2,0.4],palette.wood);
       for(const offset of [-5,5]) {
         mesh(villageHouse,"box",[2.2,1.6,0.12],"#624f36",[offset,2.5,side*8.82]);
         for(let slat=0;slat<7;slat++) mesh(villageHouse,"box",[0.07,1.5,0.16],"#b38a51",[offset-0.9+slat*0.3,2.5,side*8.7]);
       }
-      const roofPanel=mesh(villageHouse,"box",[8.5,0.22,20],"#a74e35",[side*3.7,5.8,0],[0,0,-side*0.4]); roofPanel.name="village-house-tile-roof";
-      const tiles=new THREE.Group(); tiles.userData.lowDetailHidden=true; villageHouse.add(tiles);
-      for(let row=0;row<32;row++) mesh(tiles,"cylinder",[0.045,0.045,8.5,8],"#c16c46",[side*3.7,5.95,row*0.62-9.6],[0,0,Math.PI/2-side*0.4]);
-      mesh(villageHouse,"box",[0.12,0.22,20.2],"#78432f",[side*7.65,4.25,0]);
+      mesh(villageHouse,"box",[0.3,1.38,18.2],"#68452f",[side*7.04,5.14,0]);
     }
-    mesh(villageHouse,"cylinder",[0.18,0.18,20.5,12],"#dc9a65",[0,7.4,0],[Math.PI/2,0,0]);
-    mesh(villageHouse,"box",[0.35,0.45,4.8],palette.wood,[-7,4.2,0]);
+    const ceremonialRoof=new THREE.Group(); ceremonialRoof.name="village-house-tile-roof"; villageHouse.add(ceremonialRoof);
+    const roofDetails=new THREE.Group(); roofDetails.userData.lowDetailHidden=true; ceremonialRoof.add(roofDetails);
+    function roofPoint(slope,across,side,endFace) {
+      const height=9.3-5.6*slope+1.35*slope**3+slope**4*across**8;
+      return new THREE.Vector3(endFace?10.3*slope*across:side*10.3*slope,height,endFace?side*(7+5*slope):(7+5*slope)*across);
+    }
+    function roofMoulding(root,points,radius,color,name) {
+      const curve=new THREE.CatmullRomCurve3(points);
+      const shape=tracker.track(new THREE.TubeGeometry(curve,Math.max(16,points.length*2),radius,6,false));
+      const part=new THREE.Mesh(shape,material(color)); part.name=name; part.castShadow=true; part.receiveShadow=true; root.add(part);
+    }
+    for(const side of [-1,1]) for(const endFace of [false,true]) {
+      const positions=[],indices=[],colors=[],color=new THREE.Color();
+      for(let row=0;row<=20;row++) for(let column=0;column<=48;column++) {
+        const point=roofPoint(row/20,column/24-1,side,endFace);
+        positions.push(point.x,point.y,point.z);
+        color.set(["#684735","#77513c","#805840","#70503c"][(row+column%3)%4]); colors.push(color.r,color.g,color.b);
+        if(row<20&&column<48) {
+          const corner=row*49+column; indices.push(corner,corner+49,corner+1,corner+1,corner+49,corner+50);
+        }
+      }
+      const surface=tracker.track(new THREE.BufferGeometry()); surface.setAttribute("position",new THREE.Float32BufferAttribute(positions,3));
+      surface.setAttribute("color",new THREE.Float32BufferAttribute(colors,3)); surface.setIndex(indices); surface.computeVertexNormals();
+      const tilesMaterial=tracker.track(new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.96,side:THREE.DoubleSide}));
+      const panel=new THREE.Mesh(surface,tilesMaterial); panel.name=endFace?"curved-hip-roof-end":"curved-hip-roof-main";
+      panel.castShadow=true; panel.receiveShadow=true; ceremonialRoof.add(panel);
+      for(let column=0;column<=48;column++) {
+        const points=[];
+        for(let row=0;row<=20;row++) { const point=roofPoint(row/20,column/24-1,side,endFace); point.y+=0.045; points.push(point); }
+        roofMoulding(roofDetails,points,0.055,column%4===0?"#95806a":"#8a6248","aged-clay-tile-channel");
+      }
+      const edge=[]; for(let sample=0;sample<=24;sample++) edge.push(roofPoint(1,sample/12-1,side,endFace));
+      roofMoulding(ceremonialRoof,edge,0.16,"#564536","deep-curved-eave");
+      if(!endFace) for(const corner of [-1,1]) {
+        const hip=[];
+        for(let sample=0;sample<=24;sample++) { const point=roofPoint(sample/24,corner,side,false); point.y+=0.14; hip.push(point); }
+        const tip=hip[hip.length-1]; hip.push(new THREE.Vector3(tip.x+side*0.45,tip.y+0.6,tip.z+corner*0.35));
+        hip.push(new THREE.Vector3(tip.x+side*0.55,tip.y+1.05,tip.z+corner*0.45));
+        roofMoulding(ceremonialRoof,hip,0.18,"#8f8065","upturned-temple-roof-corner");
+      }
+    }
+    const ridge=[];
+    for(let sample=0;sample<=32;sample++) { const along=sample/16-1; ridge.push(new THREE.Vector3(0,9.48+0.8*Math.abs(along)**8,along*7.6)); }
+    roofMoulding(ceremonialRoof,ridge,0.24,"#8f8065","ornamental-raised-ridge");
+    for(const side of [-1,1]) {
+      mesh(villageHouse,"box",[1.9,0.16,19.8],"#716653",[side*7.9,0.04,0]);
+      mesh(villageHouse,"box",[0.48,0.45,20],"#4d3a28",[side*8.25,4.6,0]);
+      for(const along of [-8,-4,4,8]) {
+        mesh(villageHouse,"cylinder",[0.36,0.4,0.3,12],"#8d8879",[side*8.25,0.2,along]);
+        mesh(villageHouse,"cylinder",[0.22,0.29,4.25,16],"#513626",[side*8.25,2.45,along]);
+        mesh(villageHouse,"box",[0.6,0.24,0.6],"#775637",[side*8.25,4.42,along]);
+        mesh(villageHouse,"box",[1.35,0.18,0.25],"#775637",[side*7.9,4.18,along],[0,0,side*0.42]);
+      }
+    }
+    mesh(villageHouse,"box",[0.26,0.65,4.5],"#362a20",[-7.3,4.03,0]);
+    mesh(villageHouse,"box",[0.04,0.04,4.1],"#a38c5e",[-7.45,4.25,0]);
+    mesh(villageHouse,"box",[0.04,0.04,4.1],"#a38c5e",[-7.45,3.8,0]);
+    mesh(villageHouse,"box",[0.36,0.8,4.8],palette.wood,[-7,4.2,0]);
+    for(const side of [-1,1]) mesh(villageHouse,"box",[0.4,0.26,18.3],"#58391f",[side*7,4.48,0]);
     mesh(villageHouse,"box",[14,0.025,18],"#b97552",[0,0.016,0]);
     const floorDetails=new THREE.Group(); floorDetails.userData.lowDetailHidden=true; villageHouse.add(floorDetails);
     for(let row=0;row<18;row++) mesh(floorDetails,"box",[13.7,0.006,0.018],"#dba77b",[0,0.033,row-8.5]);

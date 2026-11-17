@@ -752,6 +752,36 @@
       "path": "assets/images/instruments/image_1.png",
       "mimeType": "image/png",
       "placeholder": false
+    },
+    {
+      "id": "creator-traditional-house-reference-1",
+      "kind": "image",
+      "role": "traditional-house-reference",
+      "runtimeKey": "traditionalHouseReference1",
+      "source": "creator-provided",
+      "path": "assets/images/traditional-house/image_1.png",
+      "mimeType": "image/png",
+      "placeholder": false
+    },
+    {
+      "id": "creator-traditional-house-reference-2",
+      "kind": "image",
+      "role": "traditional-house-reference",
+      "runtimeKey": "traditionalHouseReference2",
+      "source": "creator-provided",
+      "path": "assets/images/traditional-house/image_2.png",
+      "mimeType": "image/png",
+      "placeholder": false
+    },
+    {
+      "id": "creator-traditional-house-reference-3",
+      "kind": "image",
+      "role": "traditional-house-reference",
+      "runtimeKey": "traditionalHouseReference3",
+      "source": "creator-provided",
+      "path": "assets/images/traditional-house/image_3.png",
+      "mimeType": "image/png",
+      "placeholder": false
     }
   ],
   "schemaVersion": 2,
